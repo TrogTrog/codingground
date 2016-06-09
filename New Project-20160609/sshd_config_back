@@ -1,0 +1,9 @@
+Port 22
+
+PermitRootLogin yes
+
+MaxAuthTries 45
+
+MaxStartups 12
+
+LoginGraceTime 300
