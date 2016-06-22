@@ -1,6 +1,9 @@
 #!/bin/bash
 # -*- ENCODING: UTF-8 -*-
 
+user_exist=1;
+user_no_exist=0;
+
 # Método que comprueba si el usuario existe
 userExist(){
     usuario=$1
@@ -9,9 +12,11 @@ userExist(){
     fi
     
     if grep -qi "^$usuario" /etc/passwd; then
-        echo 1
+        # El usuario existe
+        return $user_exist
     else
-        echo 0
+        # El usuario no existe
+        return $user_exist
     fi
 }
 
@@ -22,14 +27,11 @@ pass=$2
 userExist $usuario
 
 
-# Cambio usuario
+# Cambiamos la configuración del fichero sshd_config
 
 sshd_conf_file="sshd_config"
-port_sshd="Port"
-FILE="datosPrueba"
-STRING="Hola"
+port_sshd="Port\s[0-9]\{1,9\}"
 
-
-if [ ! -z $(grep "$STRING" "$FILE") ]; then 
+if grep -rq "$port_sshd" "$sshd_conf_file"; then 
     echo "FOUND" 
-if
+fi
